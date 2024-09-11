@@ -101,7 +101,7 @@ module ibex_alu #(
       default:           adder_in_b = {operand_b_i, 1'b0};
     endcase
   end
-i
+
   // actual adder
   assign adder_result_ext_o = $unsigned(adder_in_a[7:0]) + $unsigned(adder_in_b);//Added bit width [7:0]
 
