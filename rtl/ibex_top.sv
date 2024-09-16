@@ -229,7 +229,8 @@ module ibex_top import ibex_pkg::*; #(
         core_busy_q <= core_busy_d;
       end
     end
-    assign clock_en = core_busy_q[0] | debug_req_i | irq_pending | irq_nm_i;
+ // assign clock_en = core_busy_q[0] | debug_req_i | irq_pending | irq_nm_i;
+    assign clock_en = core_busy_q[0] | debug_req_i | irq_nm_i; // Added new bug for mismanage with clock gating logic
 
     logic unused_core_busy;
     assign unused_core_busy = ^core_busy_q[$bits(ibex_mubi_t)-1:1];
@@ -272,6 +273,9 @@ module ibex_top import ibex_pkg::*; #(
 
   if (MemECC) begin : gen_mem_rdata_ecc
     assign data_rdata_core[38:32] = data_rdata_intg_i;
+  //  Added new bug for Incorrect Data Integrity Handling in ECC(Error Correction Code)
+  //  assign data_rdata_core[38:32] = (data_we_o) ? 7'b0 : data_rdata_intg_i;
+
     assign instr_rdata_core[38:32] = instr_rdata_intg_i;
   end else begin : gen_non_mem_rdata_ecc
     logic unused_intg;
