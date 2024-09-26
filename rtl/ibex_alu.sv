@@ -49,8 +49,7 @@ module ibex_alu #(
   logic        adder_op_a_shift2;
   logic        adder_op_a_shift3;
   logic        adder_op_b_negate;
-  logic signed [32:0] adder_in_a; //Added for mismatch signed & unsigned 
-  logic [32:0] adder_in_b;
+  logic [32:0] adder_in_a,adder_in_b; //Removed for mismatch signed & unsigned 
   logic [31:0] adder_result;
 
   always_comb begin
@@ -103,7 +102,7 @@ module ibex_alu #(
   end
 
   // actual adder
-  assign adder_result_ext_o = $unsigned(adder_in_a[7:0]) + $unsigned(adder_in_b);//Added bit width [7:0]
+  assign adder_result_ext_o = $unsigned(adder_in_a) + $unsigned(adder_in_b);//Removed the bug bit width [7:0]
 
   assign adder_result       = adder_result_ext_o[32:1];
 

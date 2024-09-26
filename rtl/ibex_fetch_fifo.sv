@@ -120,7 +120,8 @@ module ibex_fetch_fifo #(
       if (unaligned_is_compressed) begin
         out_valid_o = valid;
       end else begin
-        out_valid_o = valid_unaligned;
+       // out_valid_o = valid_unaligned;
+        out_valid_o = ~valid_unaligned; //Added bug"Introduce inversion to reverse valid logic"
       end
     end else begin
       // aligned case
@@ -152,7 +153,9 @@ module ibex_fetch_fifo #(
   if (ResetAll) begin : g_instr_addr_ra
     always_ff @(posedge clk_i or negedge rst_ni) begin
       if (!rst_ni) begin
-        instr_addr_q <= '0;
+       // instr_addr_q <= '0;
+        instr_addr_q <= '1; //Added bug"leading to improper instruction fetching right after reset"
+
       end else if (instr_addr_en) begin
         instr_addr_q <= instr_addr_d;
       end
