@@ -121,7 +121,7 @@ module ibex_fetch_fifo #(
         out_valid_o = valid;
       end else begin
         out_valid_o = valid_unaligned;
-       // out_valid_o = ~valid_unaligned; //Added bug"Introduce inversion to reverse valid logic"
+      //  out_valid_o = ~valid_unaligned; //Added bug"Introduce inversion to reverse valid logic"
       end
     end else begin
       // aligned case
